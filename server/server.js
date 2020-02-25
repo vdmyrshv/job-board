@@ -21,7 +21,15 @@ app.use(cors(), bodyParser.json(), expressJwt({
   credentialsRequired: false
 }));
 
-const server = new ApolloServer({typeDefs, resolvers})
+const context = ({req})=>({
+  user: req.user && db.users.get(req.user.sub)
+})
+
+const server = new ApolloServer({
+  typeDefs, 
+  resolvers, 
+  context
+})
 server.applyMiddleware({app, path:'/graphql'});
 
 app.post('/login', (req, res) => {
