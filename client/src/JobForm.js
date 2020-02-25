@@ -18,7 +18,6 @@ export class JobForm extends Component {
     //fixme
     const job = await createJob({title, description})
     console.log('should post a new job:', job);
-    this.setState({title: '', description: ''});
     this.props.history.push(`/jobs/${job.id}`)
   }
 
